@@ -1,0 +1,24 @@
+variables:
+  vmImageName: 'ubuntu-latest'
+  resourceGroupName: 'rg-kwebb-demo' # Needs to already exist
+  location: 'South Central US'
+  templateFile: './main.bicep'
+  sourceFolder: 'quickstarts/microsoft.web/webapp-linux-managed-mysql/'
+
+trigger:
+- none
+
+pool:
+  vmImage: $(vmImageName)
+
+name: Bicep deploy template
+
+steps:
+- task: AzureCLI@2
+  inputs:
+    azureSubscription: '<service-connection-name>'
+    scriptType: bash
+    scriptLocation: inlineScript
+    inlineScript: |
+      az deployment group create --resource-group $(resourceGroupName) --template-file $(sourceFolder)$(templateFile) \
+      --parameters administratorLogin=$(administratorLogin) administratorLoginPassword=$(administratorLoginPassword)
