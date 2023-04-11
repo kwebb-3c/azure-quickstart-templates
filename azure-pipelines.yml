@@ -16,9 +16,9 @@ name: Bicep deploy template
 steps:
 - task: AzureCLI@2
   inputs:
-    azureSubscription: '<service-connection-name>'
-    scriptType: bash
-    scriptLocation: inlineScript
+    azureSubscription: 'sc_kwebb_demo'
+    scriptType: 'bash'
+    scriptLocation: 'inlineScript'
     inlineScript: |
       az deployment group create --resource-group $(resourceGroupName) --template-file $(sourceFolder)$(templateFile) \
       --parameters administratorLogin=$(administratorLogin) administratorLoginPassword=$(administratorLoginPassword)
